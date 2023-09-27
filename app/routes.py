@@ -1,9 +1,11 @@
-from flask import render_template, flash, redirect, request, url_for
+from flask import Blueprint, render_template, flash, redirect, request, url_for,session
 from app import app
 from app.models import *
 
+# main = Blueprint('main', __name__, template_folder='templates')
 
 @app.route('/')
-def test_db():
-    user = User.query.first()
-    return str(user)  # returning the string representation of the user
+def index():
+    if session.get('logged_in'):
+        return render_template('index.html')
+    return render_template('auth/login.html')

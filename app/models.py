@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-from app import db
+from sqlalchemy import or_
+from app import *
 
 class User(db.Model):
     __tablename__ = 'Users'
@@ -11,7 +12,10 @@ class User(db.Model):
     email = db.Column(db.String(255), unique=True, nullable=False)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
-    location = db.Column(db.String(255))
+    address = db.Column(db.String(255))
+    city = db.Column(db.String(255))
+    state = db.Column(db.String(255))
+    zip_code = db.Column(db.String(255))
     date_joined = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
 
