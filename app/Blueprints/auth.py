@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, Response, flash,session
 from app.models import *
 from werkzeug.security import generate_password_hash, check_password_hash
+from app.mail import *
 
 auth = Blueprint('auth', __name__, template_folder='templates/auth')
 
@@ -75,3 +76,38 @@ def logout():
     session['logged_in'] = False
     session['user_id'] = None
     return redirect(url_for('index'))
+
+
+@auth.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form.get('forgot_password_email')
+        user = User.query.filter_by(email=email).first()
+        print(user)
+        if user:
+            send_reset_email(user)
+            flash('An email has been sent with instructions to reset your password.')
+            print("Success")
+            return redirect(url_for('auth.index'))
+        else:
+            flash('Email address not found')
+            print("Failed")
+            return redirect(url_for('auth.forgot_password'))
+    return render_template('auth/forgot-password.html')  
+
+
+@auth.route("/reset-password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    user = User.verify_reset_token(token)
+    if not user:
+        flash('Invalid or expired token')
+        print("No user")
+        return redirect(url_for('auth.index'))
+    if request.method == 'POST':
+        password = request.form.get('new-password')
+        hashed_password = generate_password_hash(password, method='sha256')
+        user.password = hashed_password
+        db.session.commit()
+        flash('Your password has been updated! You are now able to log in')
+        return redirect(url_for('auth.index'))
+    return render_template('auth/reset-password.html', token=token)  

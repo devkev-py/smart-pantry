@@ -2,6 +2,8 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
 from app import *
+# from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
 
 class User(db.Model):
     __tablename__ = 'Users'
@@ -18,6 +20,19 @@ class User(db.Model):
     zip_code = db.Column(db.String(255))
     date_joined = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
+    def get_reset_token(self):
+        s = Serializer(app.config['SECRET_KEY'], salt='mysalt')
+        return s.dumps({'user_id': self.user_id})
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'], salt='mysalt')
+        try:
+            user_id = s.loads(token)['user_id']
+            print(user_id)
+        except:
+            return None
+        return User.query.get(user_id)
 
 class FoodCategory(db.Model):
     __tablename__ = 'FoodCategories'

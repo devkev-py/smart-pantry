@@ -1,12 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>HELLO PAGE</p>
-    <a href="{{ url_for('auth.logout') }}">Logout</a>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width= , initial-scale=1.0" />
+    <title>SmartPantry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+    />
+    <link
+    rel="stylesheet"
+    href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css"
+    />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" />
+  </head>
+  <body>
+      <nav>
+            <div class="container1">
+                <h2 class="logo">SmartPantry</h2>
+                <div class="search-bar">
+                    <i class="uil uil-search"></i>
+                    <input
+                    type="search"
+                    placeholder="Search for creators, inspirations and projects"
+                    />
+                </div>
+                <div class="create">
+                    <a href="{{ url_for('auth.logout') }}"><label class="btn btn-primary" for="create-post">Logout</label></a>
+                    <div class="profile-pic">
+                        <img src="{{url_for('static', filename='img/profile-8.jpg')}}" alt="pic 1" />
+                    </div>
+                </div>
+            </div>
+      </nav>
+
+      <main>
+          <div class="container1">
+              <div class="left">
+                  
+                  <div class="sidebar">
+                    <a class="menu-item active">
+                      <span><i class="uil uil-home"></i></span> <h3>Home</h3>
+                    </a>
+                    <a class="menu-item ">
+                      <span><i class="uil uil-compass"></i></span> <h3>Shared Food</h3>
+                    </a>
+                    <a class="menu-item" id="notifications">
+                      <span><i class="uil uil-bell"><small class="notification-count">9+</small></i></span> <h3>Notifications</h3>
+                      <div class="notifications-popup">
+                          <div>
+                              <div class="profile-pic">
+                                  <img src="./images/profile-10.jpg" >
+                              </div>
+                              <div class="notification-body">
+                                  <b>Food Expiry</b>Fish expires soon
+                                  <small class="text-muted">2 DAYS AGO</small>
+                              </div>
+                          </div>
+                          <div>
+                              <div class="profile-pic">
+                                  <img src="./images/profile-11.jpg" >
+                              </div>
+                              <div class="notification-body">
+                                  <b>Shared Food</b> Claim made on shared food
+                                  <small class="text-muted">1 HOUR AGO</small>
+                              </div>
+                          </div>
+                          <div>
+                              <div class="profile-pic">
+                                  <img src="./images/profile-12.jpg" >
+                              </div>
+                              <div class="notification-body">
+                                  <b>Food Expiry</b> Egg exipring soon
+                                  <small class="text-muted">4 MINUTES AGO</small>
+                              </div>
+                          </div>
+                      </div>
+                    </a>
+                    <!-- <a class="menu-item" id="messages-notifications">
+                        <i class="uil uil-envelope"><small class="notification-count">6</small></i></span><h3>Messages</h3>
+                    </a> -->
+                    
+                    <label class="btn btn-primary" for="create-post">Create Category</label>
+                </div>
+              </div>
+              
+
+
+            <div class="middle">
+                <!-- Table goes here -->
+                <div style="margin-top: 40px;">
+                    <caption>Pantry</caption>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Food Item</th>
+                                <th>Quantity</th>
+                                <th>Expiry</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Egg</td>
+                                <td>20</td>
+                                <td>October 30th 2023</td>
+                                <td>Good</td>
+                            </tr>
+                            <tr>
+                                <td>Chicken Wings</td>
+                                <td>2</td>
+                                <td>October 10</td>
+                                <td>Expired</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <caption>Fridge</caption>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Food Item</th>
+                                <th>Quantity</th>
+                                <th>Expiry</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Egg</td>
+                                <td>20</td>
+                                <td>October 30th 2023</td>
+                                <td>Good</td>
+                            </tr>
+                            <tr>
+                                <td>Chicken Wings</td>
+                                <td>2</td>
+                                <td>October 10</td>
+                                <td>Expired</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+              
+              <div class="right">
+                <div class="friend-requests">
+                    <h4>Analytics</h4>
+                    <div class="request">
+                        <div class="info">
+                            <div>
+                                <h5>Items In Inventory</h5>
+                                <p class="text-muted">10</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="request">
+                        <div class="info">
+                            <div>
+                                <h5>Items In Inventory</h5>
+                                <p class="text-muted">10</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="request">
+                        <div class="info">
+                            <div>
+                                <h5>Items In Inventory</h5>
+                                <p class="text-muted">10</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="request">
+                        <div class="info">
+                            <div>
+                                <h5>Items In Inventory</h5>
+                                <p class="text-muted">10</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="request">
+                        <div class="info">
+                            <div>
+                                <h5>Items In Inventory</h5>
+                                <p class="text-muted">10</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+              </div> 
+
+
+               
+              </div>
+          </div>
+      </main>
+
+        <script src="{{url_for('static', filename='js/main.js')}}"></script>
+  </body>
+  
 </html>
