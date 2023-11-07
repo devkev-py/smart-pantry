@@ -14,6 +14,11 @@ input {
   font-family: "Poppins", sans-serif;
 }
 
+a {
+  color: None;
+  text-decoration: None;
+}
+
 main {
   width: 100%;
   min-height: 100vh;
@@ -412,3 +417,5 @@ main.sign-up-mode .carousel {
     padding: 1rem 2rem 1.5rem;
   }
 }
+
+

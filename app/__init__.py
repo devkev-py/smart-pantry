@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import mysql.connector
 from app.config import *
 from flask_mail import Mail, Message
+import os
+from flask import jsonify
 
 
 app = Flask(__name__)
@@ -24,11 +26,17 @@ app.config['MAIL_USE_TLS'] = EMAIL_CONF['mailuse_tls']
 app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
 
+#UPLOAD Configurations
+app.config['UPLOAD_FOLDER'] = 'static/img'
+
+
 
 # register blueprints
 from app.Blueprints.auth import auth
+from app.Blueprints.foodinventory import food_inventory
 # from app.routes import main
 # app.register_blueprint(main)
 app.register_blueprint(auth, url_prefix='/auth')
+app.register_blueprint(food_inventory, url_prefix='/food-inventory')
 
 from app import routes, models
