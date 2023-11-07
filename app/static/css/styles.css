@@ -34,6 +34,11 @@
         background: var(--color-light-green);
         overflow-x: hidden;
     }
+
+    a {
+        color: inherit;
+        text-decoration: None;
+      }
     
     .container1{
         width: 85%;
@@ -52,7 +57,7 @@
         width: 100%;
     }
     
-    .btn{
+    .btn1{
         display: inline-block;
         padding: var(--btn-padding);
         font-weight: 500;
@@ -61,13 +66,18 @@
         transition: all 300ms ease;
     }
     
-    .btn:hover{
+    .btn1:hover{
         opacity: 0.8;
     }
     
-    .btn-primary{
+    .btn1-primary{
         background: var(--color-primary);
         color: white;
+    }
+
+    .btn1-secondary{
+        background: #e0ffe7;
+        color: var(--color-primary);
     }
     
     .text-bold{
@@ -123,7 +133,7 @@
     
     main .container1{
         display: grid;
-        grid-template-columns: 18vw auto 20vw;
+        grid-template-columns: 18vw auto;
         gap: 2rem;
         position: relative;
     }
@@ -148,6 +158,7 @@
         margin-top: 1 rem;
         background: var(--color-white);
         border-radius: var(--card-border-radius);
+        margin-bottom: 20px;
     }
     
     .left .sidebar .menu-item{
@@ -215,7 +226,7 @@
         overflow: hidden;
     }
     
-    .left .btn{
+    .left .btn1{
         margin-top: 1rem;
         width: 100%;
         text-align: center;
@@ -450,7 +461,7 @@
         .sidebar h3{
             display: none;
         }
-        .left .btn{
+        .left .btn1{
             display: none;
         }
     }
@@ -495,31 +506,183 @@
     }
 
 
-/* Tables */
-/* Styling the table header with the specified color */
-table thead {
-    background-color: #83B641;
+
+
+/* ============================== Table Style ===================================== */
+.table-wrapper {
+    background: #fff;
+    padding: 20px 25px;
+    margin: 30px 0;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  }
+  .table-title {
+    padding-bottom: 13px;
+    background: #ffffff;
+    color: #000000;
+    padding: 16px 30px;
+    margin: -20px -25px 10px;
+    border-radius: 3px 3px 0 0;
+    border-bottom: 0.8px solid #cdcdcd;
+  }
+  .table-title h2 {
+    margin: 5px 0 0;
+    font-size: 22px;
+  }
+  .table-title .btn-group {
+    float: right;
+  }
+  .table-title .btn {
+    color: #fff;
+    float: right;
+    font-size: 13px;
+    border: none;
+    min-width: 50px;
+    border-radius: 2px;
+    border: none;
+    outline: none !important;
+    margin-left: 10px;
+  }
+  .table-title .btn i {
+    float: left;
+    font-size: 21px;
+    margin-right: 5px;
+  }
+  .table-title .btn span {
+    float: left;
+    margin-top: 2px;
+  }
+  
+  table.table tr th,
+table.table tr td {
+  border-color: #e9e9e9;
+  padding: 12px 15px;
+  vertical-align: middle;
+  font-size: 13px;
 }
 
-/* Styling the table rows with a white background */
-table tbody tr {
-    background-color: white;
+table.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #fcfcfc;
+}
+table.table-striped.table-hover tbody tr:hover {
+  background: #f5f5f5;
+}
+table.table th i {
+  font-size: 13px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+table.table td:last-child i {
+  opacity: 0.9;
+  font-size: 22px;
+  margin: 0 5px;
+}
+table.table td a {
+  font-weight: bold;
+  /* color: #566787; */
+  display: inline-block;
+  text-decoration: none;
+  outline: none !important;
+  font-size: 13px;
+  font-weight: 400;
+}
+table.table td a:hover {
+  color: #83B641;
+}
+table.table td a.edit {
+  color: #ffc107;
+}
+table.table td a.delete {
+  color: #f44336;
+}
+table.table td i {
+  font-size: 19px;
+}
+table.table .avatar {
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
-/* Setting the border color for the table, header cells, and data cells */
-table, th, td {
-    border: 1px solid #d3d3d3;  /* Light grey color */
-    border-collapse: collapse;
+/* Modal styles */
+.modal .modal-dialog {
+    max-width: 400px;
+    z-index: 10;
+  }
+  .modal .modal-header,
+  .modal .modal-body,
+  .modal .modal-footer {
+    padding: 20px 30px;
+  }
+  .modal .modal-content {
+    border-radius: 3px;
+  }
+  .modal .modal-footer {
+    background: #ecf0f1;
+    border-radius: 0 0 3px 3px;
+  }
+  .modal .modal-title {
+    display: inline-block;
+  }
+  .modal .form-control {
+    border-radius: 2px;
+    box-shadow: none;
+    border-color: #dddddd;
+  }
+  .modal textarea.form-control {
+    resize: vertical;
+  }
+  .form-control {
+    font-size: 15px;
+  }
+  .modal .btn {
+    border-radius: 2px;
+    min-width: 100px;
+  }
+  .modal form label {
+    font-weight: normal;
+  }
+  .custom-modal-dialog {
+    max-width: 90%;
+    margin: 1.75rem auto;
+  }
+  
+  
+  .form-prop {
+    margin: 5px 0;
+  }
+  .fieldright {
+    padding-right: 1px;
+  }
+  .fieldleft {
+    padding-left: 1px;
+  }
+
+
+/*====================== grid layout ======================*/
+.grid-row{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 2rem;
+    position: relative;
 }
 
-th, td {
-    padding: 10px;
+p {
+    margin: 0px !important;
 }
-table {
-    width: 100%;
+
+.sidebar .box-inner {
+    padding: 1.4rem;
 }
-caption {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    font-weight: bold;
+
+
+
+/* ============ Category ======================== */
+.list-group-item {
+    padding-left: 0px !important;
+}
+.rounded-btn {
+    border-radius: 50px !important; 
+    padding: 0.25rem 0.6rem !important; 
+    font-size: 0.7rem !important;
 }
