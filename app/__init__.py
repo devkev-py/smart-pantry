@@ -32,9 +32,11 @@ app.config['UPLOAD_FOLDER'] = os.path.join('app', 'static', 'img')
 # register blueprints
 from app.Blueprints.auth import auth
 from app.Blueprints.foodinventory import food_inventory
+from app.Blueprints.yourSharedFood import your_shared_food
 # from app.routes import main
 # app.register_blueprint(main)
 app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(food_inventory, url_prefix='/food-inventory')
+app.register_blueprint(your_shared_food, url_prefix='/your-shared-food')
 
 from app import routes, models

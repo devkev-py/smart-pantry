@@ -57,7 +57,7 @@ def add_category():
         db.session.commit()
         flash('Category added successfully')
         return redirect(url_for('index'))
-    return render_template('add_category.html')
+    return redirect(url_for('index'))
 
 @food_inventory.route('/delete-category' , methods=['GET', 'POST'])
 def delete_category():
@@ -89,30 +89,7 @@ def get_food_item(id):
         'category_id': food_item.category_id,
         'quantity': food_item.quantity,
         'memo': food_item.memo,
-        # Add other fields as necessary
     })
-
-
-# @food_inventory.route('/edit-food-item/<int:id>', methods=['GET','POST'])
-# def edit_food_item(id):
-#     food_item = FoodInventory.query.get_or_404(id)
-#     food_item.food_name = request.form.get('food_name')
-#     food_item.quantity = request.form.get('quantity')
-#     food_item.expiration_date = request.form.get('expiration_date')
-#     food_item.memo = request.form.get('memo')
-
-#     file = request.files.get('food_image')
-#     if file and FoodImage.allowed_file(file.filename):
-#         filename = secure_filename(file.filename)
-#         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-#         file.save(file_path)
-#         food_item.image_path = file_path
-
-#     # Commit the changes to the database
-#     db.session.commit()
-
-#     # Redirect to the index page, or wherever is appropriate
-#     return redirect(url_for('index'))
 
 
 from werkzeug.utils import secure_filename

@@ -1,4 +1,8 @@
 
+
+
+
+
 const inputs = document.querySelectorAll(".input-field");
 const toggle_btn = document.querySelectorAll(".toggle");
 const main = document.querySelector("main");
@@ -70,17 +74,26 @@ window.addEventListener("hashchange", handleHashChange);
 
 
 // Confirm password validation
-document.getElementById("reset-password-form").addEventListener("submit", function(event) {
-  var password = document.getElementById("new-password").value;
-  var confirmPassword = document.getElementById("confirm-password").value;
+document.addEventListener('DOMContentLoaded', (event) => {
+  // Check if the element exists
+  var resetPasswordForm = document.getElementById("reset-password-form");
+  
+  // If it exists, then we attach the submit event listener
+  if (resetPasswordForm) {
+    resetPasswordForm.addEventListener("submit", function(event) {
+      var password = document.getElementById("new-password").value;
+      var confirmPassword = document.getElementById("confirm-password").value;
 
-  if (password !== confirmPassword) {
-      event.preventDefault();
-      document.getElementById("errorMessage").textContent = "Passwords do not match!";
-  } else {
-      document.getElementById("errorMessage").textContent = "";
+      if (password !== confirmPassword) {
+          event.preventDefault();
+          document.getElementById("errorMessage").textContent = "Passwords do not match!";
+      } else {
+          document.getElementById("errorMessage").textContent = "";
+      }
+    });
   }
 });
+
 
 
 

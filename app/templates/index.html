@@ -65,7 +65,7 @@
               <span><i class="uil uil-compass"></i></span>
               <h3>Discover Shared Food</h3>
             </a>
-            <a class="menu-item">
+            <a class="menu-item" href="{{ url_for('yourSharedFood.index') }}">
               <span><i class="uil uil-compass"></i></span>
               <h3>Your Shared Food</h3>
             </a>
@@ -208,7 +208,7 @@
                                 <li><a class="dropdown-item" href="#editFood" data-bs-toggle="modal" data-bs-target="#editFood" onclick="editItem('{{ item[7] }}');">Edit</a></li>
                                 <li><a class="dropdown-item" href="#deleteModal" data-bs-toggle="modal" data-bs-target="#deleteFood" onclick="setDeleteItem('{{ item[7] }}');">Delete</a></li>
                                 <li><a class="dropdown-item" href="#deleteModal" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteItem('{{ item[7] }}');">Mark As Consumed</a></li>
-                                <li><a class="dropdown-item" href="#deleteModal" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteItem('{{ item[7] }}');">Share Item</a></li>
+                                <li><a class="dropdown-item" href="#shareFoodModal" data-bs-toggle="modal" data-bs-target="#shareFoodModal" onclick="setItemID('{{ item[7] }}', '{{ item[1] }}');">Share Item</a></li>
                               </ul>
                             </div>
                           </td>
@@ -229,7 +229,7 @@
 
       <!-- add Modal HTML -->
       <div id="addModal" class="modal fade">
-        <div class="modal-dialog custom-modal-dialog">
+        <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
           <div class="modal-content modal-xl">
             <form
               action="{{ url_for('foodinventory.add_food_item') }}"
@@ -313,9 +313,79 @@
         </div>
       </div>
 
+
+       <!-- Share Food Modal HTML -->
+       <div id="shareFoodModal" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
+          <div class="modal-content modal-xl">
+            <form
+              action="{{ url_for('yourSharedFood.share_food') }}"
+              method="post"
+              id="addFoodForm"
+              enctype="multipart/form-data"
+            >
+              <div class="modal-header">
+                <h4 class="modal-title">Share Food</h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-bs-dismiss="modal"
+                  aria-hidden="true"
+                >
+                  ×
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <input type="hidden" name="food_id" id="food_share_id" value="">
+                  <input type="hidden" name="available_quantity" id="available_quantity" value="">
+                  <input
+                    type="text"
+                    placeholder="Post title"
+                    id="post_title"
+                    name="post_title"
+                    class="form-control form-prop"
+                    required
+                  />
+                  <input
+                    type="text"
+                    id="quantity"
+                    name="quantity"
+                    placeholder="Quantity to share"
+                    class="form-control form-prop"
+                    autocomplete="off"
+                    required
+                  />
+                  <textarea
+                    class="form-control form-prop"
+                    placeholder="description"
+                    name="description"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <input
+                  type="button"
+                  class="btn btn-default"
+                  data-bs-dismiss="modal"
+                  value="Cancel"
+                />
+                <input
+                  type="submit"
+                  class="btn btn-success"
+                  name="cmdaddnew"
+                  id="addCustomerBtn"
+                  value="Share"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
       <!-- Add Category -->
       <div id="addCategory" class="modal fade">
-        <div class="modal-dialog custom-modal-dialog">
+        <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
           <div class="modal-content modal-xl">
             <form
               action="{{ url_for('foodinventory.add_category') }}"
@@ -367,7 +437,7 @@
       
       <!-- Delete Category -->
       <div id="deleteCategory" class="modal fade">
-        <div class="modal-dialog custom-modal-dialog">
+        <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
           <div class="modal-content modal-xl">
             <form
               action="{{ url_for('foodinventory.delete_category') }}"
@@ -413,7 +483,7 @@
 
       <!-- Delete Food -->
       <div id="deleteFood" class="modal fade">
-        <div class="modal-dialog custom-modal-dialog">
+        <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
           <div class="modal-content modal-xl">
             <form
               action="{{ url_for('foodinventory.delete_food_item') }}"
@@ -425,7 +495,7 @@
                 <button
                 type="button"
                 class="close"
-                data-dismiss="modal"
+                data-bs-dismiss="modal"
                 aria-hidden="true"
                 >
                   ×
@@ -441,7 +511,7 @@
                   <input
                     type="button"
                     class="btn btn-default"
-                    data-dismiss="modal"
+                    data-bs-dismiss="modal"
                     value="Cancel"
                   />
                   <input
@@ -460,7 +530,7 @@
 
       <!-- Edit Modal HTML -->
       <div id="editFood" class="modal fade">
-        <div class="modal-dialog custom-modal-dialog">
+        <div class="modal-dialog modal-dialog-centered custom-modal-dialog">
           <div class="modal-content modal-xl">
             <form
               action="#"
@@ -473,7 +543,7 @@
                 <button
                   type="button"
                   class="close"
-                  data-dismiss="modal"
+                  data-bs-dismiss="modal"
                   aria-hidden="true"
                 >
                   ×
@@ -529,7 +599,7 @@
                 <input
                   type="button"
                   class="btn btn-default"
-                  data-dismiss="modal"
+                  data-bs-dismiss="modal"
                   value="Cancel"
                 />
                 <input
@@ -568,6 +638,15 @@
         function setDeleteItem(foodId) {
           document.getElementById('food_id').value = foodId;
         }
+
+        function setItemID(foodId, foodQuantity) {
+          document.getElementById('food_share_id').value = foodId;
+          document.getElementById('available_quantity').value = foodQuantity;
+        }
+
+        // function setFoodQuantity(food_quantity) {
+        //   document.getElementById('food_quantity').value = food_quantity;
+        // }
 
         function editItem(foodId) {
             // Use AJAX to get the food item details from the server

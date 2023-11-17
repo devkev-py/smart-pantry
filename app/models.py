@@ -8,6 +8,7 @@ from pathlib import Path
 from werkzeug.utils import secure_filename
 # from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
+from sqlalchemy import func
 
 class User(db.Model):
     __tablename__ = 'Users'
@@ -103,7 +104,7 @@ class FoodInventory(db.Model):
             expiry = result.expiration_date
             
             if expiry:
-                days_left = (expiry - date.today()).days
+                days_left = 0 if (expiry - date.today()).days < 0 else (expiry - date.today()).days
                 status = "Expired" if days_left <= 0 else f"Good"
                 days_left = f"{days_left} days left"
             else:
@@ -158,7 +159,42 @@ class SharedFood(db.Model):
     sharing_date = db.Column(db.DateTime, default=datetime.utcnow)
     expiry_for_sharing = db.Column(db.Date)
     status = db.Column(db.Enum('Available', 'Claimed', 'Shared'), nullable=False)
+    title = db.Column(db.String(255), nullable=False) 
+    description = db.Column(db.Text, nullable=True)
+    quantity = db.Column(db.Integer)
 
+    @classmethod
+    def create_new(cls, food_id, status, title, description,quantity):
+        new_shared_food = cls(
+            food_id=food_id,
+            sharing_date=datetime.today(),
+            status=status,
+            title=title,
+            description=description,
+            quantity=quantity
+        )
+        db.session.add(new_shared_food)
+        db.session.commit()
+        return new_shared_food  
+
+    @staticmethod
+    def get_total_quantity_being_shared(food_id):
+        result = db.session.query(func.sum(SharedFood.quantity)).filter(SharedFood.food_id == food_id).scalar()
+        return result if result is not None else 0
+    
+    @staticmethod
+    def get_user_shared_items(user_id):
+        result = db.session.query(
+            SharedFood.share_id,
+            SharedFood.title,
+            SharedFood.description,
+            SharedFood.quantity,
+            FoodInventory.food_name,
+            FoodInventory.expiration_date
+        ).join(FoodInventory, SharedFood.food_id == FoodInventory.food_id)\
+         .filter(FoodInventory.user_id == user_id)\
+         .all()
+        yield from result
 
 class SharedFoodClaims(db.Model):
     __tablename__ = 'SharedFoodClaims'
